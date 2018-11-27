@@ -15,6 +15,7 @@ class InputIns extends React.Component {
   render() {
     const { active } = this.props;
     const { hover, dragStart } = this.state;
+    const { title, required, tipmsg } = this.props.currentControlValue;
     return (
       <div
         className={`wf-component wf-component-textfield ${
@@ -36,12 +37,13 @@ class InputIns extends React.Component {
         <div className="wf-view">
           <div className="wf-field">
             <label className="wf-field-label">
-              单行输入框{this.props.index === 0 ? "" : this.props.index + 1}
+              {title}{this.props.index === 0 ? "" : this.props.index + 1}
             </label>
-            {true ? (
-              <span className="wf-field-placeholder">请输入</span>
+            {required ? (
+              <span className="wf-field-placeholder">{tipmsg}（必填）</span>
+              
             ) : (
-              <span className="wf-field-placeholder">请输入（必填）</span>
+              <span className="wf-field-placeholder">{tipmsg}</span>
             )}
           </div>
         </div>
@@ -83,21 +85,21 @@ class InputIns extends React.Component {
     });
     let x = e.pageX;
     let y = e.pageY;
-    x -=  e.nativeEvent.offsetX;
-    y -=  e.nativeEvent.offsetY;
-    window.sessionStorage.setItem('movestart',y)
+    x -= e.nativeEvent.offsetX;
+    y -= e.nativeEvent.offsetY;
+    window.sessionStorage.setItem("movestart", y);
   }
   handleDrag(e) {
     let x = e.pageX;
     let y = e.pageY;
     x -= this.state.startX;
     y -= this.state.startY;
-    this.setState(prevState=>{
-    window.sessionStorage.setItem("movetop", y);
+    this.setState(prevState => {
+      window.sessionStorage.setItem("movetop", y);
       return {
         left: x,
         top: y
-      }
+      };
     });
   }
   handleDragEnd(e) {

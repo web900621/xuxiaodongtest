@@ -20,7 +20,7 @@ class Main extends React.Component {
             className={`wf-formcanvas-inner ${dragEnter ? "drag-enter" : ""}`}
             ref="dropbody"
             onDragEnter={this.handleDragEnter.bind(this)}
-            onDragOver={this.handleDragOver.bind(this)}
+            onDragOver={ this.handleDragOver.bind(this)}
             onDragLeave={this.handleDragLeave.bind(this)}
             onDrop={this.handleDrop.bind(this)}
           >
@@ -34,6 +34,7 @@ class Main extends React.Component {
                       index={i}
                       active={val.active}
                       selectedInput={_this_.selectedInput.bind(_this_)}
+                      {..._this_.props}
                     />
                     {index === i ? <div className="wf-dragging-mark" /> : ""}
                   </div>
@@ -46,21 +47,6 @@ class Main extends React.Component {
     );
   }
   componentDidMount() {
-    // window.debounce = function(fun,delay){
-    //   var timer = null;
-    //   return function(){
-    //     var context = this;
-    //     var args = [].slice.call(arguments);
-    //     if(timer){clearTimeout(timer)}
-    //     var doNow = !timer
-    //     timer = setTimeout(function(){
-    //        timer = null;
-    //     },delay)
-    //     if(doNow){
-    //       fun.apply(context,args)
-    //     }
-    //   }
-    // }
   }
   selectedInput(index) {
     this.setState(preState => {
@@ -89,12 +75,9 @@ class Main extends React.Component {
   handleDragOver(e) {
     e.preventDefault();
     e.stopPropagation();
-    // alert(e.dataTransfer.getData('tag'))
-    // const { tag: tag, type: type } = JSON.parse(e.dataTransfer.getData("tag"));
     const tag = window.sessionStorage.getItem("tag");
     switch (tag) {
       case "new":
-        
         this.doNewAction();
         break;
       case "move":
@@ -167,7 +150,7 @@ class Main extends React.Component {
         _this_.setState({
           index: index
         });
-        // return
+        return
       }
     });
   }
@@ -226,7 +209,8 @@ class Main extends React.Component {
           preState.containers.forEach((val, i, arr) => {
             arr[i].active = false;
           });
-          const containers = preState.containers.splice(dragIndex, 0, {
+          (dragIndex == null) && (dragIndex = 0);
+          const containers = preState.containers.splice(dragIndex+1, 0, {
             type: type,
             active: true
           });
@@ -250,10 +234,11 @@ class Main extends React.Component {
       dragEnter: false,
       index: null
     });
+    this.props.funControl({type:type,title:'单行输入框',tipmsg:'请输入',required:false})
   }
   moveUp(dragIndex,moveIndex){
     this.setState( preState => {
-      (dragIndex === -1 || dragIndex == null) && (dragIndex = 0);
+      (dragIndex == null) && (dragIndex = 0);
       if (moveIndex !== dragIndex) {
        const movetarget = preState.containers.splice(moveIndex, 1);
        preState.containers.splice(dragIndex+1,0,...movetarget)

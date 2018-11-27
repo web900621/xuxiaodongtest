@@ -65,7 +65,6 @@
   "dependencies": {
     "antd": "^3.10.8",
     "events": "^3.0.0",
-    "react-addons-pure-render-mixin": "^15.6.2",
     "react-redux": "^5.1.1",
     "react-router-dom": "^4.3.1",
     "react-swipe": "^5.1.1",
