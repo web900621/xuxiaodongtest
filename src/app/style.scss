@@ -17769,7 +17769,11 @@ html:not(.wf-cursor-move) .wf-component.active>.wf-overlay {
     height: 2px;
     overflow: visible;
     position: relative;
-    margin: 3px 0
+    margin: 3px 0;
+    z-index: -9;
+}
+.wf-dragging-mark.active{
+    z-index: 9;
 }
 
 .wf-dragging-mark:after,.wf-dragging-mark:before {

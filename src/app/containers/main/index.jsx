@@ -36,7 +36,7 @@ class Main extends React.Component {
                       selectedInput={_this_.selectedInput.bind(_this_)}
                       {..._this_.props}
                     />
-                    {index === i ? <div className="wf-dragging-mark" /> : ""}
+                    <div className={`wf-dragging-mark ${index==i ? 'active':''}`} />
                   </div>
                 );
               })}
