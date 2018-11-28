@@ -26,7 +26,7 @@ class Main extends React.Component {
           >
             <div className="wf-formcanvas-body dropbody" ref="container">
               {index === -1 ? <div className="wf-dragging-mark" /> : ""}
-              {this.state.containers.map((val, i) => {
+                {this.state.containers.map((val, i) => {
                 return (
                   <div key={i}>
                     <InputIns
